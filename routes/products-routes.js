@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 const router = express.Router();
 const productsController = require("../controllers/products-controller");
 
-router.get("/", productsController.getProducts);
+router.get("/", productsController.getAllProducts);
 
 router.post(
   "/",
@@ -16,7 +16,7 @@ router.post(
   productsController.createProduct
 );
 
-router.patch(
+router.put(
   "/:id",
   [
     check("name").not().isEmpty(),

@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const Order = require("../models/order");
 const HttpError = require("../models/http-error");
 
-exports.getOrders = async (req, res, next) => {
+exports.getAllOrders = async (req, res, next) => {
   let orders;
   try {
     orders = await Order.find({});

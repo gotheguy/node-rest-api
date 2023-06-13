@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 const router = express.Router();
 const usersController = require("../controllers/users-controller");
 
-router.get("/", usersController.getUsers);
+router.get("/", usersController.getAllUsers);
 
 router.post(
   "/",
@@ -17,7 +17,7 @@ router.post(
   usersController.createUser
 );
 
-router.patch(
+router.put(
   "/:id",
   [
     check("firstName").not().isEmpty(),

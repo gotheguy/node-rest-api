@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const Product = require("../models/product");
 const HttpError = require("../models/http-error");
 
-exports.getProducts = async (req, res, next) => {
+exports.getAllProducts = async (req, res, next) => {
   let products;
   try {
     products = await Product.find({});

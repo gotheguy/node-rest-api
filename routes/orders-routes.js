@@ -4,7 +4,7 @@ const { check } = require("express-validator");
 const router = express.Router();
 const ordersController = require("../controllers/orders-controller");
 
-router.get("/", ordersController.getOrders);
+router.get("/", ordersController.getAllOrders);
 
 router.get("/:id", ordersController.getOrdersByUserId);
 
@@ -19,7 +19,7 @@ router.post(
   ordersController.createOrder
 );
 
-router.patch(
+router.put(
   "/:id",
   [
     check("referenceNumber").not().isEmpty(),

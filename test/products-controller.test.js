@@ -6,9 +6,7 @@ const expect = require("chai").expect;
 chai.use(chaiHttp);
 
 describe("Products", () => {
-  var createdProductId;
-  const expectedProductName = "The Lord of the Rings - Special Edition";
-  const expectedProductPrice = 35;
+  let testProductId;
 
   /*
    * Test the /GET route
@@ -38,36 +36,46 @@ describe("Products", () => {
         price: 19,
       })
       .end((err, res) => {
-        createdProductId = res.body.product._id;
+        testProductId = res.body.product._id;
         expect(res).to.have.status(201);
         expect(res).to.be.an("object");
-        expect(res.body.product).to.have.property("name");
-        expect(res.body.product).to.have.property("description");
-        expect(res.body.product).to.have.property("price");
+        expect(res.body.product).to.have.property(
+          "name",
+          "The Lord of the Rings"
+        );
+        expect(res.body.product).to.have.property(
+          "description",
+          "J.R.R. Tolkien"
+        );
+        expect(res.body.product).to.have.property("price", 19);
         done();
       });
   });
 
   /*
-   * Test the /PATCH/:id route
+   * Test the /PUT/:id route
    */
   it("it should UPDATE a product given the id", (done) => {
     chai
       .request(app)
-      .patch("/products/" + createdProductId)
+      .put(`/products/${testProductId}`)
       .send({
         name: "The Lord of the Rings - Special Edition",
-        price: 35,
         description: "J.R.R. Tolkien",
+        price: 35,
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body.product).to.be.a("object");
-        expect(res.body.product).to.have.property("name", expectedProductName);
+        expect(res.body.product).to.be.an("object");
         expect(res.body.product).to.have.property(
-          "price",
-          expectedProductPrice
+          "name",
+          "The Lord of the Rings - Special Edition"
         );
+        expect(res.body.product).to.have.property(
+          "description",
+          "J.R.R. Tolkien"
+        );
+        expect(res.body.product).to.have.property("price", 35);
         done();
       });
   });
@@ -78,7 +86,7 @@ describe("Products", () => {
   it("it should DELETE a product given the id", (done) => {
     chai
       .request(app)
-      .delete("/products/" + createdProductId)
+      .delete(`/products/${testProductId}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property("message", "Deleted product.");
